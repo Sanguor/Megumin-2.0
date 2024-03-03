@@ -1,0 +1,24 @@
+name: Deploy to Oracle Cloud
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install SSH Key
+        run: echo "$DEPLOY_KEY" > deploy_key.pem && chmod 600 deploy_key.pem
+
+      - name: Deploy to Oracle Cloud
+        run: |
+          scp -i deploy_key.pem -r ./ your_username@your_oracle_cloud_server_ip:/path/to/destination
+          ssh -i deploy_key.pem your_username@your_oracle_cloud_server_ip "bash -s" < deploy_script.sh
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}

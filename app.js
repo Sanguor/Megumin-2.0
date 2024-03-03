@@ -1,4 +1,7 @@
 require('dotenv').config();
+console.log('before');
+require('./server');
+console.log('after');
 const fs = require('fs');
 const Path = require('path');
 const { Client, Collection, IntentsBitField } = require('discord.js');

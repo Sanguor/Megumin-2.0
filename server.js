@@ -1,9 +1,15 @@
-const http = require('http');
+const express = require('express');
+const cors = require('cors');
 
-const port = process.env.PORT || 3000;
-const app = require('./app');
-const server = http.createServer(app);
+const app = express();
+const port = 3000;
 
-server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.use(cors());
+
+app.get('/ping', (req, res) => {
+    res.send('Pong!');
+});
+
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Express server is running at http://localhost:${port}/ping`);
 });
